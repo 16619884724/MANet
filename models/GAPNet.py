@@ -97,9 +97,9 @@ class SpatialGate(nn.Module):
         return x * scale
 
 
-class CBAM(nn.Module):
+class VNAM(nn.Module):
     def __init__(self, gate_channels, reduction_ratio=16, pool_types=['avg', 'max'], no_spatial=False):
-        super(CBAM, self).__init__()
+        super(VNAM, self).__init__()
         self.ChannelGate = ChannelGate(
             gate_channels, reduction_ratio, pool_types)
         self.no_spatial = no_spatial
@@ -119,8 +119,8 @@ class GAPNet(nn.Module):
         self.gate_channels2 = gate_channels2
         self.trans_net = transform_net(19,16,3)
         self.gap = gap_layer(self.n_neighbor)
-        self.cbam1 = CBAM(self.gate_channels1)
-        self.cbam2 = CBAM(self.gate_channels2)
+        self.cbam1 = VNAM(self.gate_channels1)
+        self.cbam2 = VNAM(self.gate_channels2)
         self.conv2d1 = conv_2d(67, 64, 1)
         self.conv2d2 = conv_2d(64, 64, 1)
         self.conv2d3 = conv_2d(64, 64, 1)
